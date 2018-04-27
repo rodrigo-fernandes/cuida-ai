@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,39 +23,46 @@ import com.rodrigo.project.model.user.UserEntity;
 @Table(name = "pessoa")
 public class PersonEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "person_seq", sequenceName = "person_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
 	@Column(name = "id_pessoa", nullable = false)
 	private Long id;
 
 	@NotNull
-	@Column(name = "pes_nome", nullable = false)
+	@Column(name = "pes_nome", nullable = false, length = 100)
 	private String name;
 
 	@NotNull
 	@Column(name = "pes_sobrenome", nullable = false)
 	private String lastname;
 
-	@Column(name = "pes_cpf", nullable = false)
+	@Column(name = "pes_cpf", nullable = false, length = 11)
 	private String cpf;
 
-	@Column(name = "pes_genero", nullable = false)
+	@Column(name = "pes_genero", nullable = false, length = 1)
 	private String genre;
 
 	@NotNull
 	@Column(name = "pes_dtnascimento", nullable = false)
 	private Date dtbirth;
 
-	@Column(name = "pes_situacao", nullable = false)
+	@Column(name = "pes_situacao", nullable = false, length = 1)
 	private char situation;
 
 	@Column(name = "pes_dtinclusao", nullable = false)
 	private Date dtinclusion;
 
-	@Column(name = "pes_rg", nullable = false)
+	@Column(name = "pes_rg", nullable = false, length = 10)
 	private String rg;
 
-	@Column(name = "pes_tipo", nullable = false)
+	@Column(name = "pes_tipo", nullable = false, length = 1)
 	private char type;
 
 	@ManyToOne
@@ -78,6 +86,10 @@ public class PersonEntity {
 		this.dtinclusion = dtinclusion;
 		this.rg = rg;
 		this.type = type;
+	}
+
+	public PersonEntity() {
+
 	}
 
 	// Getters and Setters
@@ -175,6 +187,10 @@ public class PersonEntity {
 
 	public void setUserEntity(UserEntity userEntity) {
 		this.userEntity = userEntity;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

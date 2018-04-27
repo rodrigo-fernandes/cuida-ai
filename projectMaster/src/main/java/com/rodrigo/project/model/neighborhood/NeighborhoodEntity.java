@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.rodrigo.project.model.city.CityEntity;
@@ -18,12 +19,19 @@ import com.rodrigo.project.model.city.CityEntity;
 @Table(name = "bairro")
 public class NeighborhoodEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "neighborhood_seq", sequenceName = "neighborhood_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "neighborhood_seq")
 	@Column(name = "id_bairro", nullable = false)
 	private Long id;
 
-	@Column(name = "bai_nome", nullable = false)
+	@Column(name = "bai_nome", nullable = false, length = 200)
 	private String name;
 
 	@ManyToOne
@@ -35,6 +43,10 @@ public class NeighborhoodEntity {
 		super();
 		this.name = name;
 		this.citys = citys;
+	}
+
+	public NeighborhoodEntity() {
+
 	}
 
 	// Getters and Setters
@@ -60,6 +72,10 @@ public class NeighborhoodEntity {
 
 	public void setCitys(CityEntity citys) {
 		this.citys = citys;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

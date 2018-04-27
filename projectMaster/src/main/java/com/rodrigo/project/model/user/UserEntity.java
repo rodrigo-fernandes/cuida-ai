@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,23 +20,30 @@ import com.rodrigo.project.model.person.PersonEntity;
 @Table(name = "usuario")
 public class UserEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "user_seq", sequenceName = "user_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
 	@Column(name = "id_usuario", nullable = false)
 	private Long id;
 
 	@NotNull
-	@Column(name = "usu_login", nullable = false)
+	@Column(name = "usu_login", nullable = false, length = 30)
 	private String login;
 
 	@NotNull
-	@Column(name = "usu_senha", nullable = false)
+	@Column(name = "usu_senha", nullable = false, length = 20)
 	private String password;
 
-	@Column(name = "usu_situacao", nullable = false)
+	@Column(name = "usu_situacao", nullable = false, length = 1)
 	private char situation;
 
-	@Column(name = "usu_admin", nullable = false)
+	@Column(name = "usu_admin", nullable = false, length = 1)
 	private char typeadmin;
 
 	@ManyToOne
@@ -49,6 +57,10 @@ public class UserEntity {
 		this.password = password;
 		this.situation = situation;
 		this.typeadmin = typeadmin;
+	}
+
+	public UserEntity() {
+
 	}
 
 	// Getters and Setters
@@ -98,6 +110,10 @@ public class UserEntity {
 
 	public void setPersons(PersonEntity persons) {
 		this.persons = persons;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

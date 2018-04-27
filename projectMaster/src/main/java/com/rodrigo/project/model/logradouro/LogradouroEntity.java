@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,17 +20,24 @@ import com.rodrigo.project.model.neighborhood.NeighborhoodEntity;
 @Table(name = "logradouro")
 public class LogradouroEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "logradouro_seq", sequenceName = "logradouro_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "logradouro_seq")
 	@Column(name = "id_lgd", nullable = false)
 	private Long id;
 
 	@NotNull
-	@Column(name = "ldg_descricao", nullable = false)
+	@Column(name = "ldg_descricao", nullable = false, length = 200)
 	private String name;
 
 	@NotNull
-	@Column(name = "lgd_cep", nullable = false)
+	@Column(name = "lgd_cep", nullable = false, length = 8)
 	private String cep;
 
 	@ManyToOne
@@ -42,6 +50,10 @@ public class LogradouroEntity {
 		this.name = name;
 		this.cep = cep;
 		this.neighborhood = neighborhood;
+	}
+
+	public LogradouroEntity() {
+
 	}
 
 	// Getters and Setters
@@ -75,6 +87,10 @@ public class LogradouroEntity {
 
 	public void setNeighborhood(NeighborhoodEntity neighborhood) {
 		this.neighborhood = neighborhood;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

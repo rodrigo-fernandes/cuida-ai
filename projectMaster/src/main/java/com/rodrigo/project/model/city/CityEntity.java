@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.rodrigo.project.model.state.StateEntity;
@@ -18,12 +19,18 @@ import com.rodrigo.project.model.state.StateEntity;
 @Table(name = "cidade")
 public class CityEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "city_seq", sequenceName = "city_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
 	@Column(name = "id_cid", nullable = false)
 	private Long id;
 
-	@Column(name = "cid_nome", nullable = false)
+	@Column(name = "cid_nome", nullable = false, length = 100)
 	private String name;
 
 	@Column(name = "cid_codibge", nullable = false)
@@ -38,6 +45,10 @@ public class CityEntity {
 		super();
 		this.name = name;
 		this.codibge = codibge;
+
+	}
+
+	public CityEntity() {
 
 	}
 
@@ -72,6 +83,10 @@ public class CityEntity {
 
 	public void setStates(StateEntity states) {
 		this.states = states;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,24 +20,31 @@ import com.rodrigo.project.model.person.PersonEntity;
 @Table(name = "contato")
 public class ContactEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "contact_seq", sequenceName = "contact_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contact_seq")
 	@Column(name = "id_contato", nullable = false)
 	private Long id;
 
-	@Column(name = "ctt_tlfresidencial", nullable = false)
+	@Column(name = "ctt_tlfresidencial", nullable = false, length = 15)
 	private String homephone;
 
-	@Column(name = "ctt_tcelular", nullable = false)
+	@Column(name = "ctt_tcelular", nullable = false, length = 15)
 	private String phonecel1;
 
-	@Column(name = "ctt_tcelular2", nullable = false)
+	@Column(name = "ctt_tcelular2", nullable = false, length = 15)
 	private String phonecell2;
 
-	@Column(name = "ctt_email", nullable = false)
+	@Column(name = "ctt_email", nullable = false, length = 100)
 	private String email;
 
-	@Column(name = "ctt_tipo", nullable = false)
+	@Column(name = "ctt_tipo", nullable = false, length = 1)
 	private char type;
 
 	@Column(name = "ctt_complemento", nullable = false)
@@ -57,6 +65,10 @@ public class ContactEntity {
 		this.email = email;
 		this.type = type;
 		this.complement = complement;
+	}
+
+	public ContactEntity() {
+
 	}
 
 	// Getters and Setters
@@ -122,6 +134,10 @@ public class ContactEntity {
 
 	public void setPersonEntity(PersonEntity personEntity) {
 		this.personEntity = personEntity;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

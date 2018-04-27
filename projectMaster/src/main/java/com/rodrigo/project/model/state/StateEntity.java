@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /* @author Rodrigo Fernandes */
@@ -13,22 +14,34 @@ import javax.persistence.Table;
 @Table(name = "uf")
 public class StateEntity {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	// @GeneratedValue(strategy = GenerationType.AUTO) -- Conexao com o Mysql
+
+	/* PostgreSQL: conexao com o postgres.... cria a sequencia (auto incremento) */
+	@SequenceGenerator(name = "uf_seq", sequenceName = "uf_seq")
+	/* PostgreSQL: gera o auto incremento */
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "uf_seq")
 	@Column(name = "id_uf", nullable = false)
 	private Long id;
 
-	@Column(name = "uf_estado")
-	private char abbreviation;
+	@Column(name = "uf_estado", length = 2)
+	private String abbreviation;
 
-	@Column(name = "nm_estado")
+	@Column(name = "nm_estado", length = 100)
 	private String name;
 
 	// Construction
-	public StateEntity(char abbreviation, String name) {
+	public StateEntity(String abbreviation, String name) {
 		super();
 		this.abbreviation = abbreviation;
 		this.name = name;
+	}
+	
+	
+	public StateEntity() {
+		
 	}
 
 	// Getters and Setters
@@ -40,11 +53,11 @@ public class StateEntity {
 		this.id = id;
 	}
 
-	public char getAbbreviation() {
+	public String getAbbreviation() {
 		return abbreviation;
 	}
 
-	public void setAbbreviation(char abbreviation) {
+	public void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
 
@@ -54,6 +67,10 @@ public class StateEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
