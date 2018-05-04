@@ -12,7 +12,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.rodrigo.project.model.person.PersonEntity;
-import com.rodrigo.project.model.schedule.ScheduleEntity;
 
 /* @author Rodrigo Fernandes */
 
@@ -38,10 +37,6 @@ public class ChildEntity {
 
 	@Column(name = "complemento", nullable = false)
 	private char complement;
-
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_schuedule_child"), nullable = false, name = "id_agenda")
-	private ScheduleEntity scheduleEntity;
 
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_person_child"), nullable = false, name = "id_pessoa")
@@ -90,14 +85,6 @@ public class ChildEntity {
 
 	public void setComplement(char complement) {
 		this.complement = complement;
-	}
-
-	public ScheduleEntity getScheduleEntity() {
-		return scheduleEntity;
-	}
-
-	public void setScheduleEntity(ScheduleEntity scheduleEntity) {
-		this.scheduleEntity = scheduleEntity;
 	}
 
 	public PersonEntity getPersonEntity() {

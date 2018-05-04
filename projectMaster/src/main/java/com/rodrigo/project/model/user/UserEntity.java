@@ -41,22 +41,24 @@ public class UserEntity {
 	private String password;
 
 	@Column(name = "usu_situacao", nullable = false, length = 1)
-	private char situation;
+	private String situation;
 
 	@Column(name = "usu_admin", nullable = false, length = 1)
-	private char typeadmin;
+	private String typeadmin;
 
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_person_user"), nullable = false, name = "id_pessoa")
 	private PersonEntity persons;
 
 	// Construction
-	public UserEntity(String login, String password, char situation, char typeadmin) {
+
+	public UserEntity(String login, String password, String situation, String typeadmin, PersonEntity persons) {
 		super();
 		this.login = login;
 		this.password = password;
 		this.situation = situation;
 		this.typeadmin = typeadmin;
+		this.persons = persons;
 	}
 
 	public UserEntity() {
@@ -88,19 +90,19 @@ public class UserEntity {
 		this.password = password;
 	}
 
-	public char getSituation() {
+	public String getSituation() {
 		return situation;
 	}
 
-	public void setSituation(char situation) {
+	public void setSituation(String situation) {
 		this.situation = situation;
 	}
 
-	public char getTypeadmin() {
+	public String getTypeadmin() {
 		return typeadmin;
 	}
 
-	public void setTypeadmin(char typeadmin) {
+	public void setTypeadmin(String typeadmin) {
 		this.typeadmin = typeadmin;
 	}
 

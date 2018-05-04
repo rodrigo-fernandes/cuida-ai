@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cuida-Ai</title>
+</head>
+<body>
+
+	<table border="1">
+		<tr>
+			<th>Nome</th>
+			<th>Sobrenome</th>
+		</tr>
+		<tr th:each="person : ${personsList}">
+			<td th:text="${person.name}"></td>
+			<td th:text="${person.lastname}"></td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

@@ -12,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.rodrigo.project.model.logradouro.LogradouroEntity;
+import com.rodrigo.project.model.person.PersonEntity;
 
 /* @author Rodrigo Fernandes */
 
@@ -43,6 +44,10 @@ public class AddressEntity {
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name = "fk_logradouro_endereco"), nullable = false, name = "id_lgd")
 	private LogradouroEntity logradouroEntity;
+
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_person_endereco"), nullable = false, name = "id_pessoa")
+	private PersonEntity personEntity;
 
 	// Construction
 	public AddressEntity(String name, String complement, char type, LogradouroEntity logradouroEntity) {
@@ -100,6 +105,14 @@ public class AddressEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public PersonEntity getPersonEntity() {
+		return personEntity;
+	}
+
+	public void setPersonEntity(PersonEntity personEntity) {
+		this.personEntity = personEntity;
 	}
 
 }

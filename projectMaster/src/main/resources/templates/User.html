@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cuida-Ai</title>
+</head>
+<body>
+
+	<form action="#" th:action="@{/user}" th:object="${user}" method="post">
+
+		<label>name</label>
+		<input type= "text" th:field="*{login}"/>
+		
+		<label>password</label>
+		<input type= "text" th:field="*{password}"/>
+		
+		<label>situacao</label>
+		<input type= "text" th:field="*{situation}"/>
+		
+		<label>admin</label>
+		<input type= "text" th:field="*{typeadmin}"/>
+		
+		<label>pessoa</label>
+		<input type= "text" th:field="*{persons}"/>
+		
+		<input type="submit" value = "Enviar form"/>
+		 
+	</form>
+
+</body>
+</html>

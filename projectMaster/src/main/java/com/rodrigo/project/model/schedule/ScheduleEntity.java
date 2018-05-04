@@ -4,11 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.rodrigo.project.model.child.ChildEntity;
 
 /* @author Rodrigo Fernandes */
 
@@ -46,6 +51,10 @@ public class ScheduleEntity {
 	@Column(name = "agd_necessidade", nullable = false, length = 1)
 	private char need;
 
+	@ManyToOne
+	@JoinColumn(foreignKey = @ForeignKey(name = "fk_child_schuedule"), nullable = false, name = "id_crianca")
+	private ChildEntity childEntity;
+
 	// Construction
 	public ScheduleEntity(String description, Date date, char breakfast, char lunch, char afternoonCoffee, char need) {
 		super();
@@ -56,9 +65,9 @@ public class ScheduleEntity {
 		this.afternoonCoffee = afternoonCoffee;
 		this.need = need;
 	}
-	
+
 	public ScheduleEntity() {
-		
+
 	}
 
 	// Getters and Setters
@@ -120,6 +129,14 @@ public class ScheduleEntity {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public ChildEntity getChildEntity() {
+		return childEntity;
+	}
+
+	public void setChildEntity(ChildEntity childEntity) {
+		this.childEntity = childEntity;
 	}
 
 }

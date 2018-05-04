@@ -4,18 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.rodrigo.project.model.contact.ContactEntity;
-import com.rodrigo.project.model.user.UserEntity;
 
 /* @author Rodrigo Fernandes */
 
@@ -64,14 +58,6 @@ public class PersonEntity {
 
 	@Column(name = "pes_tipo", nullable = false, length = 1)
 	private char type;
-
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_contact_person"), nullable = false, name = "id_contato")
-	private ContactEntity contactEntity;
-
-	@ManyToOne
-	@JoinColumn(foreignKey = @ForeignKey(name = "fk_user_person"), nullable = false, name = "id_usuario")
-	private UserEntity userEntity;
 
 	// Construction
 	public PersonEntity(String name, String lastname, String cpf, String genre, Date dtbirth, char situation,
@@ -171,22 +157,6 @@ public class PersonEntity {
 
 	public void setType(char type) {
 		this.type = type;
-	}
-
-	public ContactEntity getContactEntity() {
-		return contactEntity;
-	}
-
-	public void setContactEntity(ContactEntity contactEntity) {
-		this.contactEntity = contactEntity;
-	}
-
-	public UserEntity getUserEntity() {
-		return userEntity;
-	}
-
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
 	}
 
 	public static long getSerialversionuid() {
